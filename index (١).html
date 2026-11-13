@@ -1,0 +1,64 @@
+<!doctype html>
+<html lang="ar" dir="rtl">
+<head>
+<meta charset="utf-8"><meta name="viewport" content="width=device-width,initial-scale=1">
+<title>عبدالرحمن جعفر للخدمات الزراعية</title>
+<style>
+:root{--green:#174b32;--leaf:#2e7048;--cream:#f3f7f1;--gold:#c9a45c}
+*{box-sizing:border-box}body{margin:0;font-family:Tahoma,Arial,sans-serif;background:var(--cream);color:#20352a}
+header{background:var(--green);color:white;padding:18px max(5%,calc((100% - 1100px)/2));display:flex;justify-content:space-between;align-items:center;gap:12px;flex-wrap:wrap}
+.brand{font-size:21px;font-weight:bold}.brand small{display:block;font-size:12px;color:#d7e7d9;margin-top:5px}
+header a,.btn{background:var(--gold);color:#17291e;padding:10px 15px;border-radius:9px;text-decoration:none;border:0;font-weight:bold;cursor:pointer}
+main{max-width:1100px;margin:auto;padding:22px}
+.hero{background:linear-gradient(120deg,#174b32,#39734a);color:white;border-radius:18px;padding:35px 28px;margin:10px 0 24px}
+.hero h1{font-size:clamp(25px,4vw,40px);margin:0 0 12px}.hero p{line-height:1.9;max-width:650px}
+.search{width:100%;padding:13px;border:1px solid #d5dfd4;border-radius:10px;font-size:16px;margin:0 0 20px}
+h2{color:var(--green)}.grid{display:grid;grid-template-columns:repeat(auto-fit,minmax(220px,1fr));gap:16px}
+.card{background:white;border:1px solid #e0e8df;border-radius:15px;padding:16px;box-shadow:0 4px 14px #163b1b0b}
+.product-art{height:130px;border-radius:12px;background:#eaf2e8;display:grid;place-items:center;font-size:52px}
+.card h3{margin:12px 0 6px}.muted{color:#637569;font-size:13px;line-height:1.7}
+.price{font-weight:bold;color:var(--leaf);margin:10px 0}.card button{width:100%;padding:11px;border:0;border-radius:9px;background:var(--green);color:white;font-weight:bold;cursor:pointer}
+.panel{background:white;border:1px solid #e0e8df;border-radius:15px;padding:18px;margin:20px 0}
+input,textarea{width:100%;padding:12px;border:1px solid #ccd8cc;border-radius:9px;margin:6px 0 12px;font:inherit}
+.row{display:flex;gap:10px;align-items:center;justify-content:space-between;flex-wrap:wrap}
+footer{background:#123c28;color:#e5eee6;padding:25px;text-align:center;margin-top:30px;line-height:2}
+#cartLines p{border-bottom:1px solid #e5eae4;padding:7px 0}
+.note{background:#fff8e8;border:1px solid #ead7a8;padding:12px;border-radius:10px;font-size:13px;line-height:1.8}
+</style></head>
+<body>
+<header><div class="brand">عبدالرحمن جعفر <small>للخدمات الزراعية</small></div><a href="#cart">سلة المشتريات (<span id="count">0</span>)</a></header>
+<main>
+<section class="hero"><h1>معاً نحو زراعة أفضل 🌱</h1><p>مستلزمات وخدمات زراعية لمساعدة المزارعين على العناية بمحاصيلهم. تصفح الأقسام وأرسل طلبك عبر واتساب.</p><a href="#products">تسوق المنتجات</a></section>
+<input class="search" id="search" placeholder="ابحث عن منتج..." oninput="renderProducts()">
+<h2 id="products">منتجات المتجر</h2>
+<div class="grid" id="productGrid"></div>
+<section class="panel" id="cart"><div class="row"><h2>سلة المشتريات</h2><strong>العملة: الريال اليمني (ر.ي)</strong></div>
+<div id="cartLines" class="muted">السلة فارغة حالياً.</div>
+<div class="row"><strong>الإجمالي: <span id="total">0</span> ر.ي</strong><button class="btn" onclick="clearCart()">إفراغ السلة</button></div>
+<h3>بيانات التوصيل</h3>
+<label>اسم العميل</label><input id="customer" placeholder="الاسم الكامل">
+<label>رقم الهاتف</label><input id="phone" placeholder="رقم الهاتف">
+<label>العنوان (المحافظة / المديرية / القرية)</label><input id="address" placeholder="اكتب عنوان التوصيل">
+<div class="row"><button class="btn" onclick="getLocation()">📍 تحديد موقعي</button><span id="locationStatus" class="muted">لم يتم تحديد الموقع</span></div>
+<p class="note">سيطلب المتصفح إذن مشاركة الموقع. لا يتم تحديد موقع العميل إلا بموافقته. يلزم فتح الموقع عبر HTTPS حتى تعمل خاصية الموقع في معظم المتصفحات.</p>
+<button class="btn" style="width:100%;margin-top:12px" onclick="sendOrder()">إرسال الطلب عبر واتساب</button>
+</section>
+<section class="panel"><h2>التواصل</h2><p>للطلب والاستفسار: <b>780047343</b></p><p class="muted">يُرجى التأكد من تسجيل المبيدات ومطابقتها للتعليمات المحلية، واتباع بطاقة المنتج وإرشادات السلامة.</p></section>
+</main>
+<footer>عبدالرحمن جعفر للخدمات الزراعية<br>الجودة • الثقة • خدمة المزارع</footer>
+<script>
+const products=[
+{id:1,name:"مبيد فطري",desc:"قسم مخصص للمبيدات الفطرية المسجلة. أضف اسم المنتج وسعره وصورته قبل البيع.",price:0,icon:"🍃"},
+{id:2,name:"مبيد حشري",desc:"قسم مخصص للمبيدات الحشرية المسجلة. أضف اسم المنتج وسعره وصورته قبل البيع.",price:0,icon:"🌿"},
+{id:3,name:"أسمدة زراعية",desc:"قسم الأسمدة ومحسنات التربة.",price:0,icon:"🌱"}
+];
+let cart={},coords=null;
+function renderProducts(){let q=document.getElementById('search').value.trim();let list=products.filter(p=>p.name.includes(q));document.getElementById('productGrid').innerHTML=list.map(p=>`<article class="card"><div class="product-art">${p.icon}</div><h3>${p.name}</h3><div class="muted">${p.desc}</div><div class="price">${p.price? p.price.toLocaleString('ar-YE')+' ر.ي':'السعر يحدد عند إضافة المنتج'}</div><button onclick="add(${p.id})">أضف إلى السلة</button></article>`).join('')}
+function add(id){cart[id]=(cart[id]||0)+1;renderCart()}
+function removeOne(id){if(cart[id])cart[id]--;if(!cart[id])delete cart[id];renderCart()}
+function clearCart(){cart={};renderCart()}
+function renderCart(){let ids=Object.keys(cart);document.getElementById('count').textContent=ids.reduce((s,id)=>s+cart[id],0);document.getElementById('cartLines').innerHTML=ids.length?ids.map(id=>{let p=products.find(x=>x.id==id);return `<p class="row"><span>${p.name} × ${cart[id]}</span><button onclick="removeOne(${id})">حذف وحدة</button></p>`}).join(''):'السلة فارغة حالياً.';document.getElementById('total').textContent='يحدد بعد إدخال أسعار المنتجات'}
+function getLocation(){let s=document.getElementById('locationStatus');if(!navigator.geolocation){s.textContent='المتصفح لا يدعم تحديد الموقع';return}s.textContent='بانتظار السماح بتحديد الموقع...';navigator.geolocation.getCurrentPosition(pos=>{coords={lat:pos.coords.latitude,lon:pos.coords.longitude};s.textContent='تم تحديد الموقع بنجاح';},err=>{s.textContent='لم يتم الحصول على الموقع. يمكنك كتابة العنوان يدوياً.'},{enableHighAccuracy:true,timeout:15000})}
+function sendOrder(){let ids=Object.keys(cart);if(!ids.length){alert('أضف منتجاً إلى السلة أولاً');return}let name=document.getElementById('customer').value.trim(),phone=document.getElementById('phone').value.trim(),address=document.getElementById('address').value.trim();if(!name||!phone||!address){alert('يرجى إدخال الاسم والهاتف والعنوان');return}let lines=ids.map(id=>{let p=products.find(x=>x.id==id);return `${p.name} × ${cart[id]}`});let msg=`طلب جديد من المتجر\nالاسم: ${name}\nالهاتف: ${phone}\nالعنوان: ${address}\nالمنتجات:\n${lines.join('\n')}\nالعملة: الريال اليمني\n`+(coords?`موقع العميل: https://maps.google.com/?q=${coords.lat},${coords.lon}`:'لم يشارك العميل موقع GPS');window.open('https://wa.me/967780047343?text='+encodeURIComponent(msg),'_blank')}
+renderProducts();renderCart();
+</script></body></html>
